@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Video Analysis{% endblock %}
+
+{% block content %}
+    <div class="glass-effect rounded-2xl shadow-xl border border-white p-8">
+        <div class="flex items-center mb-6">
+            <div class="bg-purple-100 p-3 rounded-lg mr-4">
+                <i class="fas fa-video text-purple-600 text-xl"></i>
+            </div>
+            <div>
+                <h2 class="text-xl md:text-2xl font-bold text-gray-900">Video Content Analysis</h2>
+                <p class="text-gray-600">Upload a video to detect deepfakes and AI manipulation</p>
+            </div>
+        </div>
+        <form onsubmit="analyzeVideo(event)" class="space-y-6">
+            <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center upload-area">
+                <input type="file" id="video-input" accept="video/*" class="hidden" onchange="handleVideoUpload(event)" required>
+                <div id="video-upload-area" onclick="document.getElementById('video-input').click()" class="cursor-pointer">
+                    <div class="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-video text-2xl text-gray-400"></i>
+                    </div>
+                    <h4 class="text-lg font-semibold text-gray-900 mb-2">Upload Video</h4>
+                    <p class="text-gray-600 mb-4">Drag and drop your video here, or click to browse</p>
+                    <div class="flex justify-center space-x-6 text-sm text-gray-500 flex-wrap gap-2">
+                        <span><i class="fas fa-check mr-1 text-green-500"></i>MP4, AVI, MOV</span>
+                        <span><i class="fas fa-check mr-1 text-green-500"></i>Max 100MB</span>
+                        <span><i class="fas fa-check mr-1 text-green-500"></i>HD Quality</span>
+                    </div>
+                </div>
+                <div id="video-preview" class="hidden">
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <i class="fas fa-file-video text-4xl text-purple-500 mb-3"></i>
+                        <p id="video-name" class="font-medium text-gray-900"></p>
+                        <p id="video-size" class="text-sm text-gray-500"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-between flex-col md:flex-row gap-4 md:gap-0">
+                <div class="flex items-center space-x-4">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="frame-analysis" class="rounded border-gray-300 text-primary focus:ring-primary" checked>
+                        <span class="ml-2 text-sm text-gray-700">Frame-by-frame analysis</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" id="audio-analysis" class="rounded border-gray-300 text-primary focus:ring-primary">
+                        <span class="ml-2 text-sm text-gray-700">Audio deepfake detection</span>
+                    </label>
+                </div>
+                <button type="submit" class="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-indigo-600 text-white px-8 py-3 rounded-xl font-medium transition-all duration-200 transform hover:scale-105 shadow-lg">
+                    <i class="fas fa-search mr-2"></i>Analyze Video
+                </button>
+            </div>
+        </form>
+        <!-- Result Display -->
+        <div id="result-container" class="hidden mt-8 p-6 bg-white rounded-xl shadow-inner border border-gray-100">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Analysis Result</h3>
+            <div id="result-content" class="space-y-2"></div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Analysis Result{% endblock %}
+
+{% block content %}
+    <div class="max-w-7xl mx-auto px-4 py-12">
+        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-8">Analysis Result</h1>
+        <div id="result-container" class="bg-white rounded-xl p-8 shadow-inner border border-gray-100 hidden">
+            <div id="result-content">
+                <!-- Result will be injected here by JavaScript -->
+            </div>
+            <div class="mt-6">
+                <a href="{{ url_for('history') }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">View History</a>
+            </div>
+        </div>
+        <p id="loading-message" class="text-gray-600">Loading analysis result...</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const entryId = urlParams.get('id');
+            if (entryId) {
+                fetch(`/api/history/${entryId}`, {
+                    credentials: 'same-origin'
+                })
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    if (data && typeof data === 'object') {
+                        window.displayResult(data);
+                        document.getElementById('result-container').classList.remove('hidden');
+                        document.getElementById('loading-message').style.display = 'none';
+                    } else {
+                        throw new Error('Invalid data received');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading result:', error);
+                    document.getElementById('loading-message').textContent = 'Failed to load result: ' + error.message;
+                });
+            } else {
+                document.getElementById('loading-message').textContent = 'No result data available.';
+            }
+        });
+    </script>
+{% endblock %}

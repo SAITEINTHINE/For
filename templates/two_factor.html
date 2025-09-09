@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}Two-Factor Authentication{% endblock %}
+
+{% block content %}
+    <div class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
+        <div class="text-center mb-8">
+            <div class="mx-auto w-16 h-16 bg-primary bg-opacity-10 rounded-full flex items-center justify-center mb-4">
+                <i class="fas fa-shield-alt text-2xl text-primary"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-900">Two-Factor Authentication</h2>
+            <p class="text-gray-600">Enter the code from your authenticator app</p>
+        </div>
+        <form method="POST" class="space-y-6">
+            <div>
+                <label for="code" class="block text-sm font-medium text-gray-700">2FA Code</label>
+                <input type="text" id="code" name="code" required
+                       class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all"
+                       placeholder="Enter 6-digit code">
+            </div>
+            <button type="submit" class="w-full bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-medium transition-colors">
+                <i class="fas fa-check mr-2"></i>Verify
+            </button>
+        </form>
+        <div class="mt-6 text-center">
+            <p class="text-sm text-gray-600">Set up your authenticator app with this QR code:</p>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ totp_uri|urlencode }}" alt="2FA QR Code" class="mx-auto mt-4">
+        </div>
+    </div>
+{% endblock %}

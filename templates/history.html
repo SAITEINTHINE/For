@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="p-4 sm:p-6">
+    <h1 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Analysis History</h1>
+    <div id="history-table-mobile" class="space-y-4 md:hidden"></div>
+    <div class="hidden md:block overflow-x-auto">
+        <table id="history-table" class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Content</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">AI Probability</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Confidence</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="history-table-body" class="bg-white divide-y divide-gray-200"></tbody>
+        </table>
+    </div>
+    <div id="empty-state" class="text-lg sm:text-xl text-center py-6 hidden">No analysis history available.</div>
+    <button onclick="clearAllHistory()" class="mt-4 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors">Clear All History</button>
+</div>
+
+<!-- Safe JSON bootstrap (no inline JS eval) -->
+<script id="analyses-json" type="application/json">
+{{ analyses|tojson|safe }}
+</script>
+
+<script>
+    // Always fetch the latest history on page load
+    window.addEventListener('load', () => {
+        fetchHistory().catch(error => {
+            console.error('Failed to fetch history on load:', error);
+            const es = document.getElementById('empty-state');
+            if (es) es.classList.remove('hidden');
+        });
+    });
+</script>
+{% endblock %}

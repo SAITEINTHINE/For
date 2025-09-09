@@ -1,0 +1,28 @@
+body { font-family: 'Inter', sans-serif; }
+.gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+.glass-effect { backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.95); }
+.score-low { color: #059669; background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+.score-medium { color: #d97706; background: linear-gradient(135deg, #fef3c7, #fde68a); }
+.score-high { color: #dc2626; background: linear-gradient(135deg, #fee2e2, #fecaca); }
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-pulse-slow { animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+@keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+.card-hover { transition: all 0.3s ease; }
+.card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
+.upload-area { transition: all 0.3s ease; }
+.upload-area:hover { border-color: #6366f1; background: #f8fafc; }
+.progress-bar { background: linear-gradient(90deg, #6366f1, #06b6d4); }
+.notification { animation: slideIn 0.5s ease-out; }
+@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+/* OPTIONAL (nice slide-down on mobile menu) */
+#mobile-menu {
+  transition: max-height 0.25s ease;
+  overflow: hidden;
+}
+#mobile-menu.hidden {
+  max-height: 0;
+}
+#mobile-menu:not(.hidden) {
+  max-height: 1000px; /* big enough for menu items */
+}
